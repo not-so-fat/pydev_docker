@@ -25,6 +25,6 @@ When you build image, current directory must have
     1. Test
         - `docker run pydev_${module_name}:0.0 pytest`
     2. Jupyter
-        - `docker run pydev_${module_name}:0.0 -d jupyter notebook --allow-root`
+        - `docker run -p ${port}:8888 pydev_${module_name}:0.0`
     3. General interactive shell
         - `docker run -i -t pydev_${module_name}:0.0 /bin/bash`

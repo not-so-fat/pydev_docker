@@ -2,6 +2,10 @@ FROM ubuntu:latest
 
 WORKDIR /app
 
+ENV USERNAME=neo
+RUN useradd -ms /bin/bash ${USERNAME}
+RUN usermod -aG sudo ${USERNAME}
+
 ENV SHELL=/bin/bash
 RUN apt-get update \
     && apt-get install -y \
@@ -28,5 +32,8 @@ ADD . /app
 RUN python3 setup.py bdist_wheel sdist
 RUN pip3 install dist/*.whl
 
+RUN chown -R ${USERNAME} /app
+USER ${USERNAME}
+
 EXPOSE 8888
-CMD ["/bin/bash"]
+CMD ["jupyter", "notebook", "--ip", "0.0.0.0", "--no-browser"]
