@@ -36,4 +36,4 @@ RUN chown -R ${USERNAME} /app
 USER ${USERNAME}
 
 EXPOSE 8888
-CMD ["jupyter", "notebook", "--ip", "0.0.0.0", "--no-browser"]
+CMD ["jupyter", "notebook", "--ip", "0.0.0.0", "--no-browser", "--NotebookApp.token=''"]
