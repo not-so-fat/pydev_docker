@@ -4,6 +4,16 @@
 
 To provide execution environment during Python development
 
+
+## Why do I want this?
+
+When I prepare test environment for multiple Python projects, it was a bit troublesome
+to prepare / update each environment.
+
+## Solution
+
+By using Docker, provide consistent way to prepare test environment.
+
 ## Usage
 1. Copy `build_pydev.bat` and `Dockerfile` to your module's directory
     - see ["Requirements"](#Requirements) for details
