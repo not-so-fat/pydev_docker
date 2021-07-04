@@ -21,19 +21,26 @@ RUN apt-get update \
         python3-dev \
         python3-pip
 
-RUN pip3 install -U pip setuptools
-RUN pip3 install wheel jupyter pytest twine
+RUN pip3 install -U pip setuptools virtualenv
+RUN chown -R ${USERNAME} /app
 
-ADD ./requirements.txt /app/
-RUN pip3 install -r /app/requirements.txt
+USER ${USERNAME}
+ENV PATH=/app/venv/bin:$PATH
+RUN virtualenv -p python3 venv && chmod 700 ./venv/bin/activate
+RUN /app/venv/bin/pip install wheel jupyter pytest twine
+
+# ^ common requirements
+
+ADD ./requirements.txt /app/requirements.txt
+RUN /app/venv/bin/pip install -r /app/requirements.txt
+
+# ^ module dependency
 
 ADD . /app
+RUN /app/venv/bin/python setup.py bdist_wheel sdist
+RUN /app/venv/bin/pip install dist/*.whl
 
-RUN python3 setup.py bdist_wheel sdist
-RUN pip3 install dist/*.whl
-
-RUN chown -R ${USERNAME} /app
-USER ${USERNAME}
+# ^ update of module itself / test codes
 
 EXPOSE 8888
-CMD ["jupyter", "notebook", "--ip", "0.0.0.0", "--no-browser", "--NotebookApp.token=''"]
+CMD ["venv/bin/jupyter", "notebook", "--ip", "0.0.0.0", "--no-browser", "--NotebookApp.token=''"]
