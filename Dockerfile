@@ -36,7 +36,7 @@ RUN /app/venv/bin/pip install -r /app/requirements.txt
 
 # ^ module dependency
 
-ADD . /app
+ADD --chown=${USERNAME}:${USERNAME} . /app
 RUN /app/venv/bin/python setup.py bdist_wheel sdist
 RUN /app/venv/bin/pip install dist/*.whl
 
