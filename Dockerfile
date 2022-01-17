@@ -42,5 +42,6 @@ RUN /app/venv/bin/pip install dist/*.whl
 
 # ^ update of module itself / test codes
 
+EXPOSE 5000
 EXPOSE 8888
 CMD ["venv/bin/jupyter", "notebook", "--ip", "0.0.0.0", "--no-browser", "--NotebookApp.token=''"]
