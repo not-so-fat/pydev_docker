@@ -21,14 +21,14 @@ By using Docker, provide consistent way to prepare test environment.
     - run `build_pydev.bat ${module_name}`
 3. Example usage 
     1. Run test
-        - `docker run pydev_${module_name}:0.0 pytest`
+        - `docker run pydev_${module_name} pytest`
     2. Jupyter (note notebooks are just created in the container and will not be saved by default)
-        - `docker run -p ${port}:8888 pydev_${module_name}:0.0`
+        - `docker run -p ${port}:8888 pydev_${module_name}`
     3. General interactive shell
-        - `docker run -i -t pydev_${module_name}:0.0 /bin/bash`
+        - `docker run -i -t pydev_${module_name} /bin/bash`
         - e.g. upload built wheel to pypi `python3 -m twine upload --repository pypi dist/*`
     4. Try Flask app
-        - `docker run -p ${port}:5000 pydev_${module_name}:0.0 /bin/bash`
+        - `docker run -p ${port}:5000 pydev_${module_name} /bin/bash`
         - Then use `/home/neo/venv/bin/flask` to launch your Flask app (requirements.txt should have `flask`)
 
 ## How it works?
