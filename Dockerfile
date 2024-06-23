@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:22.04
 
 WORKDIR /app
 
@@ -19,15 +19,17 @@ RUN apt-get update \
         nkf \
         libpng-dev libfreetype6-dev \
         python3-dev \
-        python3-pip
+        python3-pip \
+        python3-venv
 
 RUN pip3 install -U pip setuptools virtualenv
 RUN chown -R ${USERNAME} /app
 
 USER ${USERNAME}
 ENV PATH=/app/venv/bin:$PATH
-RUN virtualenv -p python3 venv && chmod 700 ./venv/bin/activate
+RUN python3 -m venv venv && chmod 700 ./venv/bin/activate
 RUN /app/venv/bin/pip install wheel jupyter pytest twine
+RUN venv/bin/jupyter labextension disable "@jupyterlab/apputils-extension:announcements"
 
 # ^ common requirements
 
